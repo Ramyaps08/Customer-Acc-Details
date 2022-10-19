@@ -1,0 +1,73 @@
+#%RAML 1.0
+title: Customer Accounts Details API
+types:
+  Accounts: !include /datatypes/AccountsDataType.raml
+
+/accounts:
+   get:
+     description: Get all the account details
+     headers:
+       Requesters-ID:
+         description: Indentify the requester who is making the requests
+         required: true
+     queryParameters:
+      type:
+        displayName: Account Type
+        description: Give the details that matches the account
+        required: true
+        enum:
+          - personal
+          - business
+      name:
+        displayName: Account owner name 
+        description:  name of the owner  
+        required: false
+      country:
+        displayName: Account owner country
+        description: country of the owner
+        required: false
+     responses:
+          200:
+            description: Given account details are successful
+            body:
+              application/json:
+                type: Accounts[]
+                examples:
+                  output: !include /examples/Accountsexample.raml
+          400:
+              body:
+                  application/json:
+                      example:
+                          message: "unsuccessfull in getting data"  
+   post:
+     displayName: New Account
+     description: accepts only array of the account details
+     headers:
+       Requester-ID: 
+         description: Indentify the requester who is making the requests
+         required: true 
+     responses:
+       201:
+        body:
+          application/json:
+            example:
+              message: successfully created new accounts
+       400:
+        body:
+          application/json:
+            example:
+              message: Error in creating new accounts
+                                            
+
+              
+            
+        
+        
+
+                 
+       
+
+                
+
+                 
+        
